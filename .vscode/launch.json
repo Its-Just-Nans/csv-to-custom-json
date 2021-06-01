@@ -1,0 +1,17 @@
+{
+    "configurations": [
+    {
+        "name": "Run test.js",
+        "request": "launch",
+        "runtimeArgs": [
+            "run",
+            "test"
+        ],
+        "runtimeExecutable": "npm",
+        "skipFiles": [
+            "<node_internals>/**"
+        ],
+        "type": "pwa-node"
+    }
+    ]
+}

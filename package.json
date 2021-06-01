@@ -1,0 +1,37 @@
+{
+    "name": "csv-to-json",
+    "description": "",
+    "author": "n4n5 / Its-Just-Nans",
+    "homepage": "https://github.com/Its-Just-Nans/csv-to-json",
+    "bugs": "https://github.com/Its-Just-Nans/csv-to-json/issues",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Its-Just-Nans/csv-to-json.git"
+    },
+    "keywords": [
+        "csv",
+        "csv parser",
+        "parse csv",
+        "csvtojson",
+        "json",
+        "csv to json",
+        "csv-to-json",
+        "csv convert",
+        "tojson",
+        "convert csv to json",
+        "csv-json",
+        "complex json"
+    ],
+    "bin": {
+        "csv-to-json": "./bin/csv-to-json"
+    },
+    "license": "",
+    "engines": {
+        "node": ">=4.0.0"
+    },
+    "scripts": {
+        "test": "node test.js"
+    },
+    "browser": "./browser/browser.js",
+    "main": "index.js"
+}
