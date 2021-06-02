@@ -1,25 +1,41 @@
 const parseFile = require("./index");
 
-// output params
+/* eslint no-unused-expressions: "off"*/
+/* eslint sort-keys: "off"*/
+/* eslint require-await: "off"*/
+
+// Output params
 const doLog = true;
 const woaw = false;
 
-let allFunc = [];
+const allFunc = [];
 
 allFunc.push(async () => {
     const linkFile = "test/simple.csv";
-    doLog ? console.log(`Normal "${linkFile}"`) : "";
+    doLog ? console.log(`- Normal \n"${linkFile}"`) : "";
     const schema = {
         num1: "",
         num2: "",
-        num3: "",
+        num3: ""
     };
-    return await parseFile(linkFile, schema);
+    return parseFile(linkFile, schema);
 });
 allFunc.push(async () => {
     const linkFile = "test/simple.csv";
-    doLog ? console.log(`No schema "${linkFile}"`) : "";
-    return await parseFile(linkFile);
+    doLog ? console.log(`- Normal with debug output \n"${linkFile}"`) : "";
+    const schema = {
+        num1: "",
+        num2: "",
+        num3: ""
+    };
+    return parseFile(linkFile, schema, {
+        debug: true
+    });
+});
+allFunc.push(async () => {
+    const linkFile = "test/simple.csv";
+    doLog ? console.log(`- No schema \n"${linkFile}"`) : "";
+    return parseFile(linkFile);
 });
 allFunc.push(async () => {
     const linkFile = "test/simple_customSeparator.csv";
@@ -27,100 +43,138 @@ allFunc.push(async () => {
     const schema = {
         num1: "",
         num2: "",
-        num3: "",
+        num3: ""
     };
-    return await parseFile(linkFile, schema, {
-        separator: ";",
+    return parseFile(linkFile, schema, {
+        separator: ";"
     });
 });
 allFunc.push(async () => {
-    const linkFile = "test/simple_callBackItem.csv";
-    doLog ? console.log(`CallBack on item "${linkFile}"`) : "";
+    const linkFile = "test/simple.csv";
+    doLog ? console.log(`- CallBack on item \n"${linkFile}"`) : "";
     const schema = {
         num1: "",
-        num2: function (item) {
+        num2 (item) {
             return `callBack${item}`;
         },
-        num3: "",
+        num3: ""
     };
-    return await parseFile(linkFile, schema);
+    return parseFile(linkFile, schema);
 });
 allFunc.push(async () => {
-    const linkFile = "test/simple_CallBackLine.csv";
-    doLog ? console.log(`CallBack after line "${linkFile}"`) : "";
+    const linkFile = "test/simple.csv";
+    doLog ? console.log(`- CallBack after line \n"${linkFile}"`) : "";
     const schema = {
         num1: "",
         num2: "",
-        num3: "",
+        num3: ""
     };
-    return await parseFile(linkFile, schema, {
+    return parseFile(linkFile, schema, {
         lineCallBack: async (parsedLine, sourceLine) => {
-            console.log(JSON.stringify(parsedLine), "lineCallBack");
-        },
+            doLog ? console.log(JSON.stringify(parsedLine), sourceLine, "lineCallBack") : null;
+        }
     });
 });
 allFunc.push(async () => {
-    const linkFile = "test/simple_parseValue.csv";
-    doLog ? console.log(`Parse Value (default) "${linkFile}"`) : "";
+    const linkFile = "test/simple.csv";
+    doLog ? console.log(`- Parse Value (default) \n"${linkFile}"`) : "";
     const schema = {
         num1: "int",
         num2: "float",
-        num3: "string",
+        num3: "string"
     };
-    return await parseFile(linkFile, schema);
+    return parseFile(linkFile, schema);
 });
 allFunc.push(async () => {
-    const linkFile = "test/simple_parseValue.csv";
-    doLog ? console.log(`Don't parse Value (force) "${linkFile}"`) : "";
+    const linkFile = "test/simple.csv";
+    doLog ? console.log(`- Don't parse Value (force) \n"${linkFile}"`) : "";
     const schema = {
         num1: "int",
         num2: "float",
-        num3: "string",
+        num3: "string"
     };
-    return await parseFile(linkFile, schema, {
-        parse: false,
+    return parseFile(linkFile, schema, {
+        parse: false
     });
 });
 allFunc.push(async () => {
     const linkFile = "test/simple_complexe.csv";
-    doLog ? console.log(`More complexe structure "${linkFile}"`) : "";
+    doLog ? console.log(`- More complexe structure \n"${linkFile}"`) : "";
     const schema = {
         num1: {
-            num4: "",
+            num4: ""
         },
         num2: "",
-        num3: "",
+        num3: ""
     };
-    return await parseFile(linkFile, schema, {
-        debug: true,
-    });
+    return parseFile(linkFile, schema);
 });
 allFunc.push(async () => {
     const linkFile = "test/simple_complexe.csv";
-    doLog ? console.log(`More complexe double same name "${linkFile}"`) : "";
+    doLog ? console.log(`- More complexe double same name \n"${linkFile}"`) : "";
     const schema = {
         num1: {
             num4: {
-                num4: "string",
-            },
+                num4: "string"
+            }
         },
         num2: "",
-        num3: "",
+        num3: ""
     };
-    return await parseFile(linkFile, schema, {
-        debug: true,
+    return parseFile(linkFile, schema);
+});
+allFunc.push(async () => {
+    const linkFile = "test/simple_complexe.csv";
+    doLog ? console.log(`- More complexe struct \n"${linkFile}"`) : "";
+    const schema = {
+        hello: {
+            uno: {
+                dos: {
+                    tres: {
+                        num4: "string"
+                    }
+                }
+            }
+        },
+        bonjour: {
+            un: {
+                deux: {
+                    trois: {
+                        num2: "string",
+                        num1: "int"
+                    }
+                }
+            }
+        },
+        num3: ""
+    };
+    return parseFile(linkFile, schema, {
+        debug: true
+    });
+});
+allFunc.push(async () => {
+    const linkFile = "test/simple_complexe.csv";
+    doLog ? console.log(`- Array \n"${linkFile}"`) : "";
+    const schema = {
+        hello: [
+            {
+                num4: "int",
+                num1: "string"
+            }
+        ],
+        num3: ""
+    };
+    return parseFile(linkFile, schema, {
+        debug: true
     });
 });
 
 (async () => {
     for (const oneTestFunc of allFunc) {
-        console.log("------------------");
-        try {
-            const res = await oneTestFunc();
-            doLog ? console.log(woaw ? JSON.stringify(res, null, 4) : JSON.stringify(res)) : null;
-        } catch (error) {
-            throw error;
-            //throw new Error(error);
-        }
+        doLog ? console.log("------------------") : null;
+        const res = await oneTestFunc();
+        doLog ? console.log(woaw ? JSON.stringify(res, null, 4) : JSON.stringify(res)) : null;
     }
+    console.log("------------------");
+    console.log("OK");
 })();
