@@ -6,7 +6,8 @@ const parseFile = require("./index");
 
 // Output params
 const doLog = true;
-const woaw = false;
+let woaw = true;
+woaw = false;
 
 const allFunc = [];
 
@@ -29,13 +30,18 @@ allFunc.push(async () => {
         num3: ""
     };
     return parseFile(linkFile, schema, {
-        debug: true
+        Debug: true
     });
 });
 allFunc.push(async () => {
     const linkFile = "test/simple.csv";
     doLog ? console.log(`- No schema \n"${linkFile}"`) : "";
     return parseFile(linkFile);
+});
+allFunc.push(async () => {
+    const linkFile = "test/simple.csv";
+    doLog ? console.log(`- No schema but options \n"${linkFile}"`) : "";
+    return parseFile(linkFile, null, {error: "no"});
 });
 allFunc.push(async () => {
     const linkFile = "test/simple_customSeparator.csv";
@@ -56,6 +62,24 @@ allFunc.push(async () => {
         num1: "",
         num2 (item) {
             return `callBack${item}`;
+        },
+        num3: ""
+    };
+    return parseFile(linkFile, schema);
+});
+allFunc.push(async () => {
+    const linkFile = "test/simple.csv";
+    doLog ? console.log(`- CallBack on item with async callBack \n"${linkFile}"`) : "";
+    const schema = {
+        num1: "",
+        async num2 (item) {
+            // eslint-disable-next-line no-unused-vars
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve(`callBack${item}`);
+                }, 500);
+                // Only 500 ms because the test will be too long :/
+            });
         },
         num3: ""
     };
@@ -148,9 +172,7 @@ allFunc.push(async () => {
         },
         num3: ""
     };
-    return parseFile(linkFile, schema, {
-        debug: true
-    });
+    return parseFile(linkFile, schema);
 });
 allFunc.push(async () => {
     const linkFile = "test/simple_complexe.csv";
@@ -164,6 +186,158 @@ allFunc.push(async () => {
         ],
         num3: ""
     };
+    return parseFile(linkFile, schema);
+});
+allFunc.push(async () => {
+    const linkFile = "test/simple_complexe.csv";
+    doLog ? console.log(`- Array \n"${linkFile}"`) : "";
+    const schema = {
+        hello: [
+            {
+                num4: "int",
+                num1: "string"
+            }
+        ],
+        hello2: [
+            {
+                num4: "int",
+                num1: [
+                    {
+                        num3: "string"
+                    }
+                ]
+            }
+        ]
+    };
+    return parseFile(linkFile, schema);
+});
+allFunc.push(async () => {
+    const linkFile = "test/simple_complexe.csv";
+    doLog ? console.log(`- Array \n"${linkFile}"`) : "";
+    const schema = {
+        hello: [
+            {
+                num4: "int",
+                num1: "string"
+            }
+        ],
+        hello2: [
+            [
+                {
+                    num3: "string"
+                }
+            ]
+        ]
+    };
+    return parseFile(linkFile, schema);
+});
+allFunc.push(async () => {
+    const linkFile = "test/simple_complexe.csv";
+    doLog ? console.log(`- Array in object\n"${linkFile}"`) : "";
+    const schema = {
+        hello: [
+            {
+                num4: "int",
+                num1: "string"
+            }
+        ],
+        hello2: [
+            {
+                num4: "int",
+                num3 (value) {
+                    return `hey${value}`;
+                },
+                num1: [
+                    "num4",
+                    "text",
+                    function (allValues) {
+                        return `toto${allValues.toString()}`;
+                    },
+                    () => "arrow"
+                ]
+            }
+        ]
+    };
+    return parseFile(linkFile, schema, {
+        debug: true
+    });
+});
+allFunc.push(async () => {
+    const linkFile = "test/simple_complexe.csv";
+    doLog ? console.log(`- Array \n"${linkFile}"`) : "";
+    const schema = {
+        num1: [
+            "num4",
+            "text",
+            function (allValues) {
+                return `toto${allValues.toString()}`;
+            },
+            () => "arrow"
+        ]
+    };
+    return parseFile(linkFile, schema, {
+        debug: "max"
+    });
+});
+allFunc.push(async () => {
+    const linkFile = "test/simple_complexe.csv";
+    doLog ? console.log(`- Array schema \n"${linkFile}"`) : "";
+    const schema = [
+        "num4",
+        "text",
+        function (allValues) {
+            return `toto${allValues.toString()}`;
+        },
+        () => "arrow"
+    ];
+    return parseFile(linkFile, schema, {
+        debug: true
+    });
+});
+allFunc.push(async () => {
+    const linkFile = "test/simple_complexe.csv";
+    doLog ? console.log(`- Array schema with an object \n"${linkFile}"`) : "";
+    const schema = [
+        "num4",
+        "text",
+        function (allValues) {
+            return `toto${allValues.toString()}`;
+        },
+        () => "arrow",
+        {
+            staticValue: "value",
+            num1: "int"
+        }
+    ];
+    return parseFile(linkFile, schema, {
+        debug: true
+    });
+});
+allFunc.push(async () => {
+    const linkFile = "test/simple_complexe.csv";
+    doLog ? console.log(`- Array schema with an object and an array\n"${linkFile}"`) : "";
+    const schema = [
+        "num4",
+        "text",
+        [
+            "arrayHereLol",
+            [
+                "andHereLol",
+                {
+                    obj: "lol",
+                    num4: "int"
+                }
+            ]
+        ],
+        function (allValues) {
+            return `toto${allValues.toString()}`;
+        },
+        () => "arrow",
+        {
+            staticValue: "value",
+            num1: "int"
+        }
+    ];
     return parseFile(linkFile, schema, {
         debug: true
     });
