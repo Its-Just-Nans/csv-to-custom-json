@@ -10,6 +10,7 @@ const parseFile = async function (pathToFile, schema, optionsUser) {
     // Obligate to do typeof optionsUser.separator !== "undefined" && optionsUser.separator !== null
     // Because if it's "false" -> optionsUser.nameOptions || true -> will be true
     const options = {
+        arrayParse: typeof optionsUser.arrayParse !== "undefined" && optionsUser.arrayParse !== null ? optionsUser.arrayParse : true,
         callBackForce: typeof optionsUser.callBackForce !== "undefined" && optionsUser.callBackForce !== null ? optionsUser.callBackForce : false,
         debug: typeof optionsUser.debug !== "undefined" && optionsUser.debug !== null ? optionsUser.debug : false,
         error: typeof optionsUser.error !== "undefined" && optionsUser.error !== null ? optionsUser.error : false,
@@ -17,14 +18,23 @@ const parseFile = async function (pathToFile, schema, optionsUser) {
         parse: typeof optionsUser.parse !== "undefined" && optionsUser.parse !== null ? optionsUser.parse : true,
         separator: typeof optionsUser.separator !== "undefined" && optionsUser.separator !== null ? optionsUser.separator : ","
     };
-    if (options.debug && options.customError === "no") {
-        console.log("Look at him, he is ");
+    if (options.debug) {
+        if (typeof schema !== "undefined" && schema !== null) {
+            console.log("HAS SCHEMA");
+        } else {
+            console.log("NO SCHEMA");
+        }
+        console.log("OPTIONS", JSON.stringify(options));
+        if (options.error === "no") {
+            console.log("Useless informations : just use try catch if you don't want error :)");
+        }
     }
     return new Promise((resolve) => {
         const lineReader = readline.createInterface({
             crlfDelay: Infinity,
             input: fs.createReadStream(pathToFile)
         });
+        const privateSeparator = "...";
         let rows = [];
         let lineCounter = 0;
         let firstLine = [];
@@ -32,16 +42,15 @@ const parseFile = async function (pathToFile, schema, optionsUser) {
         let lineBuffer = [];
 
         const createFieldsBinding = function (schemaObject, startPath = "") {
-            // TODO arrange order
             let bindings = [];
             for (const oneElement in schemaObject) {
                 if (Object.prototype.hasOwnProperty.call(schemaObject, oneElement)) {
-                    const path = startPath === "" ? `${oneElement}` : `${startPath}.${oneElement}`;
+                    const path = startPath === "" ? `${oneElement}` : `${startPath}${privateSeparator}${oneElement}`;
                     if (typeof schemaObject[oneElement] === "object" || Array.isArray(schemaObject[oneElement])) {
                         if (Array.isArray(schemaObject[oneElement])) {
                             bindings.push({
                                 name: oneElement,
-                                path,
+                                path: path,
                                 type: "helper-array"
                             });
                         }
@@ -50,10 +59,28 @@ const parseFile = async function (pathToFile, schema, optionsUser) {
                             ...createFieldsBinding(schemaObject[oneElement], path)
                         ];
                     } else {
-                        bindings.push({
-                            name: oneElement,
-                            path
-                        });
+                        if (Array.isArray(schemaObject) && options.arrayParse && firstLine.includes(schemaObject[oneElement])) {
+                            bindings.push({
+                                name: schemaObject[oneElement],
+                                path: path,
+                                value: "string"
+                            });
+                        } else {
+                            if (firstLine.includes(oneElement) || typeof schemaObject[oneElement] === "function") {
+                                bindings.push({
+                                    name: oneElement,
+                                    path: path,
+                                    value: schemaObject[oneElement]
+                                });
+                            } else {
+                                bindings.push({
+                                    name: oneElement,
+                                    path: path,
+                                    type: "static",
+                                    value: schemaObject[oneElement]
+                                });
+                            }
+                        }
                     }
                 }
             }
@@ -61,60 +88,66 @@ const parseFile = async function (pathToFile, schema, optionsUser) {
         };
 
         const parseLine = async function (line) {
-            const obj = {};
+            let obj;
+            if (options.debug) {
+                // Debugger;
+            }
+            if (typeof schema !== "undefined" && schema !== null && Array.isArray(schema)) {
+                obj = [];
+            } else {
+                obj = {};
+            }
             const allValues = line.split(options.separator);
             for (const oneRow of rows) {
                 const onePathRow = oneRow.path;
                 const onePathName = oneRow.name;
-                const allPath = onePathRow.split(".");
-                let currentValue;
-                if (typeof oneRow.type === "undefined") {
+                const allPath = onePathRow.split(privateSeparator);
+                let currentValue = null;
+                if (typeof oneRow.type === "undefined" || oneRow.type === null) {
+                    const schemaValue = oneRow.value;
                     const index = firstLine.findIndex((element) => element === oneRow.name);
                     if (index === -1) {
-                        if (options.debug && options.error === "custom") {
-                            console.log("how");
-                        } else if (options.debug && options.error === "no") {
-                            resolve(finalJson);
-                        }
-                        throw Error("ERROR");
+                        currentValue = schemaValue;
+                    } else {
+                        currentValue = allValues[index];
                     }
-                    currentValue = allValues[index];
                     // Optionnal parse the value
                     if (options.parse === true) {
-                        if (typeof schema !== "undefined" && schema !== null) {
-                            let schemaValue;
-                            if (allPath.length > 1) {
-                                schemaValue = schema;
-                                for (const onePath of allPath) {
-                                    schemaValue = schemaValue[onePath];
-                                }
-                            } else {
-                                schemaValue = schema[onePathRow];
-                            }
-                            if (typeof schemaValue !== "undefined") {
-                                if (schemaValue === "int") {
-                                    currentValue = parseInt(currentValue, 10);
-                                } else if (schemaValue === "float") {
-                                    currentValue = parseFloat(currentValue);
-                                } else if (schemaValue === "string") {
-                                    currentValue = currentValue.toString();
-                                } else if (typeof schemaValue === "function") {
+                        if (typeof schemaValue !== "undefined") {
+                            if (schemaValue === "int") {
+                                currentValue = parseInt(currentValue, 10);
+                            } else if (schemaValue === "float") {
+                                currentValue = parseFloat(currentValue);
+                            } else if (schemaValue === "string") {
+                                currentValue = currentValue.toString();
+                            } else if (typeof schemaValue === "function") {
+                                if (typeof currentValue === "function") {
+                                    // When the value is in an array
+                                    currentValue = await schemaValue(allValues);
+                                } else {
                                     currentValue = await schemaValue(currentValue);
                                 }
                             }
                         }
                     }
-                } else {
+                } else if (oneRow.type === "helper-array") {
+                    // This bug was hard !
+                    // We can do currentValue = oneRow.value; for helper-array
+                    // Because it's a reference and not a static value, lol, I'm dumb
                     currentValue = [];
+                } else if (oneRow.type === "static") {
+                    currentValue = oneRow.value;
                 }
-                let goodPlace;
+                let goodPlace = null;
                 if (allPath.length > 1) {
                     goodPlace = obj;
                     const long = allPath.length;
                     for (let count = 0; count < long; count++) {
                         const nextPath = allPath[count];
                         if (count === long - 1) {
-                            goodPlace[nextPath] = "";
+                            if (!Array.isArray(goodPlace)) {
+                                goodPlace[nextPath] = "";
+                            }
                         } else {
                             if (typeof goodPlace[nextPath] === "undefined") {
                                 goodPlace[nextPath] = {};
@@ -123,15 +156,10 @@ const parseFile = async function (pathToFile, schema, optionsUser) {
                         }
                     }
                     if (goodPlace) {
-                        if (typeof goodPlace === "object") {
-                            goodPlace[onePathName] = currentValue;
-                        } else {
-                            // Need to be an array
-                            // TODO arrange order
-                            const temp = goodPlace;
-                            goodPlace = [];
-                            goodPlace.push(temp);
+                        if (Array.isArray(goodPlace)) {
                             goodPlace.push(currentValue);
+                        } else if (typeof goodPlace === "object") {
+                            goodPlace[onePathName] = currentValue;
                         }
                     } else {
                         goodPlace = currentValue;
@@ -170,7 +198,8 @@ const parseFile = async function (pathToFile, schema, optionsUser) {
         });
         lineReader.on("pause", async () => {
             for (const oneLine of lineBuffer) {
-                let parsedLine = await parseLine(oneLine);
+                let parsedLine = {};
+                parsedLine = await parseLine(oneLine);
                 if (typeof options.lineCallBack !== "undefined" && typeof options.lineCallBack === "function") {
                     const resCallback = await options.lineCallBack(parsedLine, oneLine);
                     if (typeof resCallBack !== "undefined" && resCallback !== null) {
