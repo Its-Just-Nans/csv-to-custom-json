@@ -16,7 +16,9 @@ const parseFile = async function (pathToFile, schema, optionsUser) {
         error: typeof optionsUser.error !== "undefined" && optionsUser.error !== null ? optionsUser.error : false,
         lineCallBack: typeof optionsUser.lineCallBack !== "undefined" && optionsUser.lineCallBack !== null ? optionsUser.lineCallBack : null,
         parse: typeof optionsUser.parse !== "undefined" && optionsUser.parse !== null ? optionsUser.parse : true,
-        separator: typeof optionsUser.separator !== "undefined" && optionsUser.separator !== null ? optionsUser.separator : ","
+        separator: typeof optionsUser.separator !== "undefined" && optionsUser.separator !== null ? optionsUser.separator : ",",
+        privateSeparator: typeof optionsUser.privateSeparator !== "undefined" && optionsUser.privateSeparator !== null ? optionsUser.privateSeparator : "...",
+        overrideFirstLine: typeof optionsUser.overrideFirstLine !== "undefined" && optionsUser.overrideFirstLine !== null ? optionsUser.overrideFirstLine : false
     };
     if (options.debug) {
         if (typeof schema !== "undefined" && schema !== null) {
@@ -29,12 +31,17 @@ const parseFile = async function (pathToFile, schema, optionsUser) {
             console.log("Useless informations : just use try catch if you don't want error :)");
         }
     }
+    if (!fs.existsSync(pathToFile)) {
+        if (options.error === "no") {
+            return [];
+        }
+        throw new Error("Can't access to the file");
+    }
     return new Promise((resolve) => {
         const lineReader = readline.createInterface({
             crlfDelay: Infinity,
             input: fs.createReadStream(pathToFile)
         });
-        const privateSeparator = "...";
         let rows = [];
         let lineCounter = 0;
         let firstLine = [];
@@ -45,7 +52,7 @@ const parseFile = async function (pathToFile, schema, optionsUser) {
             let bindings = [];
             for (const oneElement in schemaObject) {
                 if (Object.prototype.hasOwnProperty.call(schemaObject, oneElement)) {
-                    const path = startPath === "" ? `${oneElement}` : `${startPath}${privateSeparator}${oneElement}`;
+                    const path = startPath === "" ? `${oneElement}` : `${startPath}${options.privateSeparator}${oneElement}`;
                     if (typeof schemaObject[oneElement] === "object" || Array.isArray(schemaObject[oneElement])) {
                         if (Array.isArray(schemaObject[oneElement])) {
                             bindings.push({
@@ -101,7 +108,7 @@ const parseFile = async function (pathToFile, schema, optionsUser) {
             for (const oneRow of rows) {
                 const onePathRow = oneRow.path;
                 const onePathName = oneRow.name;
-                const allPath = onePathRow.split(privateSeparator);
+                const allPath = onePathRow.split(options.privateSeparator);
                 let currentValue = null;
                 if (typeof oneRow.type === "undefined" || oneRow.type === null) {
                     const schemaValue = oneRow.value;
@@ -174,7 +181,11 @@ const parseFile = async function (pathToFile, schema, optionsUser) {
         lineReader.on("line", (line) => {
             lineReader.pause();
             if (lineCounter === 0) {
-                firstLine = line.split(options.separator);
+                if (typeof options.overrideFirstLine !== "undefined" && options.overrideFirstLine !== null && Array.isArray(options.overrideFirstLine)) {
+                    firstLine = options.overrideFirstLine; // check if same length ?
+                } else {
+                    firstLine = line.split(options.separator);
+                }
                 if (typeof schema !== "undefined" && schema !== null) {
                     rows = createFieldsBinding(schema);
                     if (options.debug) {
@@ -182,8 +193,7 @@ const parseFile = async function (pathToFile, schema, optionsUser) {
                     }
                 } else {
                     // There is no schema
-                    const parts = line.split(options.separator);
-                    rows = parts.map((element) => ({
+                    rows = firstLine.map((element) => ({
                         name: element,
                         path: element
                     }));
