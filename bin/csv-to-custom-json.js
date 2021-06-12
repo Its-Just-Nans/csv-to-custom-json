@@ -54,18 +54,26 @@ let res;
             const schema = require(options.schema);
             res = await parse(options.entry, schema);
         }
+    } else {
+        throw new Error(`ERROR: Can't access to ${options.entry}`);
     }
     if (typeof res !== "undefined") {
         if (options.out !== null) {
             try {
                 fs.writeFileSync(options.out, JSON.stringify(res, null, 4));
             } catch (error) {
-                throw new Error("Error during write the out file")
+                throw new Error("ERROR: problem when writing output")
             }
         } else {
             if (!options.silent) {
-                console.log(JSON.stringify(res, null, 4));
+                try {
+                    console.log(JSON.stringify(res, null, 4));
+                } catch (error) {
+                    throw new Error("ERROR: problem when writing output")
+                }
             }
         }
+    } else {
+        throw new Error("Error during parsing or can't parse");
     }
 })()
