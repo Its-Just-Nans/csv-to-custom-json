@@ -1,6 +1,6 @@
 {
     "name": "csv-to-custom-json",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Easily transform your CSV to a custom JSON with cool options",
     "author": "n4n5",
     "homepage": "https://github.com/Its-Just-Nans/csv-to-custom-json",
