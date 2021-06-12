@@ -17,6 +17,7 @@ Transform your `.csv` file to a custom JSON structure :) !
       - [Line Call Back](#line-call-back)
       - [Call Back Force](#call-back-force)
       - [Array Parse](#array-parse)
+      - [Override First Line](#override-first-line)
   - [Tricks](#tricks)
     - [Array Trick](#array-trick)
     - [Array schema Trick](#array-schema-trick)
@@ -155,6 +156,14 @@ This options allow you to force taking the result of the call back even if it's 
 > - value: boolean: `true` or `false`
 
 This options allow you to disable the parsing in an array.
+
+#### Override First Line
+
+> - name: `overrideFirstLine`
+> - default: `false`
+> - value: `array of string` or `false`
+
+This options allow you to override the first line.
 
 ## Tricks
 

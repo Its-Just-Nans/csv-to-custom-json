@@ -1,4 +1,4 @@
-const parseFile = require("./index");
+const parseFile = require("../index");
 
 /* eslint no-unused-expressions: "off"*/
 /* eslint sort-keys: "off"*/
@@ -378,7 +378,7 @@ allFunc.push(async () => {
         }
     };
     return parseFile(linkFile, schema, {
-        overideFirstLine: newFirstLine,
+        overrideFirstLine: newFirstLine,
         debug: true
     });
 });

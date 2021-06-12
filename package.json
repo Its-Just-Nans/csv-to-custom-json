@@ -32,9 +32,6 @@
     "scripts": {
         "test": "node test/test.js"
     },
-    "directories": {
-        "man": "README.md"
-    },
     "browser": "./browser/browser.js",
     "main": "index.js"
 }
