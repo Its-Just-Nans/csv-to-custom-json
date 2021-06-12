@@ -14,7 +14,7 @@ Transform your `.csv` file to a custom JSON structure :) !
   - [Documentation](#documentation)
   - [Examples](#examples)
   - [About](#about)
-  - [Licence](#licence)
+  - [License](#license)
 
 </details>
 
@@ -124,6 +124,6 @@ And see `*.test.js` files to know which code is used !
 
 I coded this instead of doing my homework 😳
 
-## Licence
+## License
 
-Licensed under the MIT License [LICENSE](LICENSE)
+Licensed under the MIT License - [LICENSE](LICENSE)
