@@ -1,10 +1,30 @@
-# csv-to-json
+# csv-to-custom-json
 
-I coded this instead of doing my homework 😳
+Transform your `.csv` file to a custom JSON structure :) !
 
----
+<details>
+<summary>Click to expand</summary>
 
-This function can transform `.csv` file to a custom JSON structure :)
+<!-- TOC -->
+- [csv-to-custom-json](#csv-to-custom-json)
+  - [Documentation](#documentation)
+    - [Simple case](#simple-case)
+    - [Structure JSON](#structure-json)
+    - [Options](#options)
+      - [Debug](#debug)
+      - [Separator](#separator)
+      - [Parse](#parse)
+      - [Line Call Back](#line-call-back)
+      - [Call Back Force](#call-back-force)
+      - [Array Parse](#array-parse)
+  - [Tricks](#tricks)
+    - [Array Trick](#array-trick)
+    - [Array schema Trick](#array-schema-trick)
+  - [Examples](#examples)
+  - [About](#about)
+  - [Licence](#licence)
+
+</details>
 
 ## Documentation
 
@@ -13,6 +33,7 @@ This function can transform `.csv` file to a custom JSON structure :)
 You just want to parse your `.csv` without structure :
 
 ```javascript
+const parseFile = require("./index");
 const parsed = await parseFile(linkFile);
 ```
 
@@ -27,12 +48,13 @@ const schema = {
     num3: "string",
     num4 (value, allValues) {
         // this is a callBack !
-    }
+    },
     async num5 (value, allValues) {
-        // this is a callBack ! (async!)
+        // this is a async callBack !
     }
 };
-
+// then
+const parsedFile = await parseFile("myfile.csv", schema);
 ```
 
 > Legend :
@@ -62,15 +84,31 @@ const schema = {
         }
     ]
 };
+// then
+const parsedFile = await parseFile("myfile.csv", schema);
 ```
 
 ### Options
 
+To use options, you need to add a third paramters which is an object with options.
+
+Example :
+
+```javascript
+const parsedFile = await parseFile("myfile.csv", schema, {
+    debug: true,
+});
+```
+
+For options, when I say `boolean`, in reality, it can be any `true` value of javascript. Same for `false`
+
+You can see [examples](#examples) to help you !
+
 #### Debug
 
-> name: `debug`
-> default: `false`
-> value: boolean: `true` or `false`
+> - name: `debug`
+> - default: `false`
+> - value: boolean: `true` or `false`
 
 This options show the parsed result of your schema (can be useful sometimes)
 
@@ -78,17 +116,17 @@ This options also allow log from the function (example, a mistake)
 
 #### Separator
 
-> name: `separator`
-> default: `,`
-> values: string
+> - name: `separator`
+> - default: `,`
+> - values: string
 
 `.csv` stands for "Comma Separated Values", but if you're a rebel, this options is made for you :)
 
 #### Parse
 
-> name: `parse`
-> default: `true`
-> value: boolean: `true` or `false`
+> - name: `parse`
+> - default: `true`
+> - value: boolean: `true` or `false`
 
 This function desactivate the parsing of values: `function`, `int`, `float`, `string`
 
@@ -96,21 +134,27 @@ With this function all is string
 
 #### Line Call Back
 
-> name: `lineCallBack`
-> default: `null`
-> value: function (async or not)
+> - name: `lineCallBack`
+> - default: `null`
+> - value: function (async or not)
 
 It activate the callBack after each line, can be useful if ou want to do a insert in database (for example)
 
 #### Call Back Force
 
-> name: `callBackForce`
-> default: `false`
-> value: boolean: `true` or `false`
+> - name: `callBackForce`
+> - default: `false`
+> - value: boolean: `true` or `false`
 
 This options allow you to force taking the result of the call back even if it's `undefined` or `null`
 
-Soon :) -> See examples !
+#### Array Parse
+
+> - name: `arrayParse`
+> - default: `true`
+> - value: boolean: `true` or `false`
+
+This options allow you to disable the parsing in an array.
 
 ## Tricks
 
@@ -133,8 +177,8 @@ const schema = {
 
 > Legend:
 >
-> - by default, if `num4` is in the firstLine, it will be parsed and replace by the corresponding value.
-> - here, the function is in an array and can't be isn't identified by a name, so we can't give to it a special value, sothe function will receive an array with all value of the current line
+> - by default, `num4` in the firstLine will be parsed and replace by the corresponding value.
+> - functions are in an array and can't be identified by a name, so we can't give to it a value paramter, so the function will receive an array with all value of the current line
 
 ### Array schema Trick
 
@@ -160,3 +204,11 @@ npm run test
 ```
 
 And see `test.js` to know what code is used
+
+## About
+
+I coded this instead of doing my homework 😳
+
+## Licence
+
+TODO

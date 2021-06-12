@@ -2,11 +2,11 @@
     "name": "csv-to-json",
     "description": "",
     "author": "n4n5 / Its-Just-Nans",
-    "homepage": "https://github.com/Its-Just-Nans/csv-to-json",
-    "bugs": "https://github.com/Its-Just-Nans/csv-to-json/issues",
+    "homepage": "https://github.com/Its-Just-Nans/csv-to-custom-json",
+    "bugs": "https://github.com/Its-Just-Nans/csv-to-custom-json/issues",
     "repository": {
         "type": "git",
-        "url": "https://github.com/Its-Just-Nans/csv-to-json.git"
+        "url": "https://github.com/Its-Just-Nans/csv-to-custom-json.git"
     },
     "keywords": [
         "csv",
@@ -20,17 +20,20 @@
         "tojson",
         "convert csv to json",
         "csv-json",
-        "complex json"
+        "complex json",
+        "custom json",
+        "csv custom json"
     ],
-    "bin": {
-        "csv-to-json": "./bin/csv-to-json"
-    },
+    "bin": "./bin/csv-to-custom-json.js",
     "license": "",
     "engines": {
         "node": ">=4.0.0"
     },
     "scripts": {
-        "test": "node test.js"
+        "test": "node test/test.js"
+    },
+    "directories": {
+        "man": "README.md"
     },
     "browser": "./browser/browser.js",
     "main": "index.js"

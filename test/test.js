@@ -41,7 +41,7 @@ allFunc.push(async () => {
 allFunc.push(async () => {
     const linkFile = "test/simple.csv";
     doLog ? console.log(`- No schema but options \n"${linkFile}"`) : "";
-    return parseFile(linkFile, null, {error: "no"});
+    return parseFile(linkFile, null, { error: "no" });
 });
 allFunc.push(async () => {
     const linkFile = "test/simple_customSeparator.csv";
@@ -60,7 +60,7 @@ allFunc.push(async () => {
     doLog ? console.log(`- CallBack on item \n"${linkFile}"`) : "";
     const schema = {
         num1: "",
-        num2 (item) {
+        num2(item) {
             return `callBack${item}`;
         },
         num3: ""
@@ -72,7 +72,7 @@ allFunc.push(async () => {
     doLog ? console.log(`- CallBack on item with async callBack \n"${linkFile}"`) : "";
     const schema = {
         num1: "",
-        async num2 (item) {
+        async num2(item) {
             // eslint-disable-next-line no-unused-vars
             return new Promise((resolve, reject) => {
                 setTimeout(() => {
@@ -244,7 +244,7 @@ allFunc.push(async () => {
         hello2: [
             {
                 num4: "int",
-                num3 (value) {
+                num3(value) {
                     return `hey${value}`;
                 },
                 num1: [
@@ -339,6 +339,46 @@ allFunc.push(async () => {
         }
     ];
     return parseFile(linkFile, schema, {
+        debug: true
+    });
+});
+allFunc.push(async () => {
+    const linkFile = "test/simple_complexe.csv";
+    doLog ? console.log(`- Use private internal separator\n"${linkFile}"`) : "";
+    const schema = {
+        num4: {
+            num1: "string",
+            "num1...": "string",
+            num2: "string",
+            num3: "int",
+            hello4: (value) => {
+                return `The number 4 is ${value}`;
+            }
+        }
+    };
+    // "num1..." will be not deisplayed
+    return parseFile(linkFile, schema, {
+        debug: true,
+        privateSeparator: "...." // we change the privateSeparator to four points (it can be any string)
+    });
+});
+allFunc.push(async () => {
+    const linkFile = "test/simple_complexe.csv";
+    doLog ? console.log(`- Overide the first line\n"${linkFile}"`) : "";
+    const newFirstLine = ["hello1", "hello2", "hello3", "hello4"];
+    const schema = {
+        num4: {
+            num4: "string",
+            hello1: "string",
+            hello2: "int",
+            hello3: "float",
+            hello4: (value) => {
+                return `The number 4 is ${value}`;
+            }
+        }
+    };
+    return parseFile(linkFile, schema, {
+        overideFirstLine: newFirstLine,
         debug: true
     });
 });
