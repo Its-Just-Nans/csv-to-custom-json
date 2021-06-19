@@ -1,22 +1,18 @@
-# csv-to-custom-json
-
-[![npm version](https://img.shields.io/npm/v/csv-to-custom-json.svg)](https://www.npmjs.org/package/csv-to-custom-json)
+# csv-to-custom-json &middot; [![npm version](https://img.shields.io/npm/v/csv-to-custom-json.svg)](https://www.npmjs.org/package/csv-to-custom-json) [![Build Status](https://travis-ci.com/Its-Just-Nans/csv-to-custom-json.svg?branch=main)](https://travis-ci.com/Its-Just-Nans/csv-to-custom-json)
 
 Transform your `.csv` file to a custom JSON structure :) !
 
 <details>
 <summary>Click to expand</summary>
 
-<!-- TOC -->
-- [csv-to-custom-json](#csv-to-custom-json)
-  - [Simple documentation](#simple-documentation)
-    - [Simple case](#simple-case)
-    - [Structure JSON](#structure-json)
-    - [Options](#options)
-  - [Documentation](#documentation)
-  - [Examples](#examples)
-  - [About](#about)
-  - [License](#license)
+- [Simple documentation](#simple-documentation)
+  - [Simple case](#simple-case)
+  - [Structure JSON](#structure-json)
+  - [Options](#options)
+- [Documentation](#documentation)
+- [Examples](#examples)
+- [About](#about)
+- [License](#license)
 
 </details>
 
@@ -94,11 +90,7 @@ const parsedFile = await parseFile("myfile.csv", schema, {
 });
 ```
 
-For options, when I say `boolean`, in reality, it can be any `true` value of javascript. Same for `false`.
-
-Run [examples](#examples) to help you !
-
-All options are listed in the documentation
+All options are listed in the documentation (you can run [examples](#examples) to help you) !
 
 ## Documentation
 
