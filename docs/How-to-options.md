@@ -14,6 +14,8 @@ const parsedFile = await parseFile("myfile.csv", schema, {
 
 For options, when I say `boolean`, in reality, it can be any `true` value of javascript. Same for `false`.
 
+---
+
 ### Debug
 
 > - name: `debug`
@@ -24,6 +26,8 @@ This options show the parsed result of your schema (can be useful sometimes)
 
 This options also allow log from the function (example, a mistake)
 
+---
+
 ### Separator
 
 > - name: `separator`
@@ -31,6 +35,8 @@ This options also allow log from the function (example, a mistake)
 > - values: string
 
 `.csv` stands for "Comma Separated Values", but if you're a rebel, this options is made for you :)
+
+---
 
 ### Parse
 
@@ -42,6 +48,8 @@ This function desactivate the parsing of values: `function`, `int`, `float`, `st
 
 With this function all is string
 
+---
+
 ### Line Call Back
 
 > - name: `lineCallBack`
@@ -49,6 +57,8 @@ With this function all is string
 > - value: function (async or not)
 
 It activate the callBack after each line, can be useful if ou want to do a insert in database (for example)
+
+---
 
 ### Call Back Force
 
@@ -58,6 +68,8 @@ It activate the callBack after each line, can be useful if ou want to do a inser
 
 This options allow you to force taking the result of the call back even if it's `undefined` or `null`
 
+---
+
 ### Array Parse
 
 > - name: `arrayParse`
@@ -65,6 +77,8 @@ This options allow you to force taking the result of the call back even if it's 
 > - value: boolean: `true` or `false`
 
 This options allow you to disable the parsing in an array.
+
+---
 
 ### Override First Line
 

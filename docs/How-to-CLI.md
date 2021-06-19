@@ -6,14 +6,16 @@ If the package is installed as a `node_modules`, you can use CLI with a npm scri
 
 Here is the `package.json`
 
-```
+```JSON
 {
    ...
    "scripts": {
         "cli": "csv-to-custom-json YOUR_OPTIONS..."
     },
+    ...
 }
 ```
+
 > Legend :
 >
 > - You can now run it with `npm run cli`
@@ -23,14 +25,14 @@ Here is the `package.json`
 
 You can use the command
 
-```
+```sh
 csv-to-custom-json YOUR_OPTIONS...
 ```
+
 > Legend :
 >
 > - You can change `YOUR_OPTIONS...` with corrects options
 
 ## Options
-
 
 Soon...
