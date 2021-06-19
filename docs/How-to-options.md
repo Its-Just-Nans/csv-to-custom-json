@@ -21,14 +21,14 @@ const parsedFile = await parseFile("myfile.csv", schema, {
 Test can be run with options :
 
 ```sh
-npm -s run test -- -l test/callBack_force.test.js callBack_force.test.js
+npm -s run test -- -n test/callBack_force.test.js callBack_force.test.js
 ```
 
 > Legend :
 >
 > - `-s` is to silent npm
-> - `--` is used to pass the `-l` to the `test.js` file
-> - `-l` is used to allow only useful log
+> - `--` is used to pass the `-n` parameters to the `test.js` file
+> - `-n` is used to allow only useful log
 > - `test/callBack_force.test.js` and `callBack_force.test.js` are here to demonstrate that you can omit the `test/` in the string
 
 ---
