@@ -1,10 +1,12 @@
 const parseFile = require("../index");
 const path = require("path");
 
-const test = async () => {
+const test = async (doLog) => {
     const linkFile = "./simple.csv";
     const link = path.join(__dirname, linkFile);
-    console.log(`- Parse Value (default) - "${linkFile}"`);
+    if (doLog != false) {
+        console.log(`- Parse Value (default) - ${path.basename(__filename)} - "${linkFile}"`)
+    }
     const schema = {
         num1: "int",
         num2: "float",

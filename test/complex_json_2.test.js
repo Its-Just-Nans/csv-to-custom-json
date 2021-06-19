@@ -1,10 +1,12 @@
 const parseFile = require("../index");
 const path = require("path");
 
-const test = async () => {
+const test = async (doLog) => {
     const linkFile = "./simple_complexe.csv";
     const link = path.join(__dirname, linkFile);
-    console.log(`- More complexe structure with same name - "${linkFile}"`);
+    if (doLog != false) {
+        console.log(`- More complexe structure with same name - ${path.basename(__filename)} - "${linkFile}"`);
+    }
     const schema = {
         num1: {
             num4: {

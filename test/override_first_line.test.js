@@ -1,10 +1,12 @@
 const parseFile = require("../index");
 const path = require("path");
 
-const test = async () => {
+const test = async (doLog) => {
     const linkFile = "./simple_complexe.csv";
     const link = path.join(__dirname, linkFile);
-    console.log(`- Override the first line - "${linkFile}"`);
+    if (doLog != false) {
+        console.log(`- Override the first line - ${path.basename(__filename)} - "${linkFile}"`);
+    }
     const newFirstLine = ["hello1", "hello2", "hello3", "hello4"];
     const schema = {
         num4: {

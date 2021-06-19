@@ -1,10 +1,12 @@
 const parseFile = require("../index");
 const path = require("path");
 
-const test = async () => {
+const test = async (doLog) => {
     const linkFile = "./simple_customSeparator.csv";
     const link = path.join(__dirname, linkFile);
-    console.log(`- Custom Separator - "${linkFile}"`);
+    if (doLog != false) {
+        console.log(`- Custom Separator - ${path.basename(__filename)} - "${linkFile}"`);
+    }
     const schema = {
         num1: "",
         num2: "",

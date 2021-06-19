@@ -15,24 +15,26 @@ const test = async (doLog) => {
         },
         () => "arrow"
     ];
-    return parseFile(link, schema);
+    return parseFile(link, schema, {
+        arrayParse: false
+    });
 };
 
 const result = [
     [
-        "4",
+        "num4",
         "text",
         "toto1,2,3,4",
         "arrow"
     ],
     [
-        "7",
+        "num4",
         "text",
         "toto4,5,6,7",
         "arrow"
     ],
     [
-        "10",
+        "num4",
         "text",
         "toto7,8,9,10",
         "arrow"

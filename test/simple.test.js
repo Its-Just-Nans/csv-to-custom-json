@@ -1,10 +1,12 @@
 const parseFile = require("../index");
 const path = require("path");
 
-const test = async () => {
+const test = async (doLog) => {
     const linkFile = "./simple.csv";
     const link = path.join(__dirname, linkFile);
-    console.log(`- Simple - "${linkFile}"`);
+    if (doLog != false) {
+        console.log(`- Simple - ${path.basename(__filename)} - "${linkFile}"`);
+    }
     return parseFile(link);
 };
 
