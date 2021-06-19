@@ -212,7 +212,7 @@ const parseFile = async function (pathToFile, schema, optionsUser) {
                 parsedLine = await parseLine(oneLine);
                 if (typeof options.lineCallBack !== "undefined" && typeof options.lineCallBack === "function") {
                     const resCallback = await options.lineCallBack(parsedLine, oneLine);
-                    if (typeof resCallBack !== "undefined" && resCallback !== null) {
+                    if (typeof resCallBack === "undefined" && resCallback === null) {
                         if (options.callBackForce) {
                             parsedLine = resCallback;
                         } else {
