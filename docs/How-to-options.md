@@ -12,7 +12,24 @@ const parsedFile = await parseFile("myfile.csv", schema, {
 });
 ```
 
-For options, when I say `boolean`, in reality, it can be any `true` value of javascript. Same for `false`.
+## Informations for tests
+
+- For options, when it's writed `boolean`, in reality, it can be any `true` value of javascript. Same for `false`.
+
+- command to run test
+
+Test can be run with options :
+
+```sh
+npm -s run test -- -l test/callBack_force.test.js callBack_force.test.js
+```
+
+> Legend :
+>
+> - `-s` is to silent npm
+> - `--` is used to pass the `-l` to the `test.js` file
+> - `-l` is used to allow only useful log
+> - `test/callBack_force.test.js` and `callBack_force.test.js` are here to demonstrate that you can omit the `test/` in the string
 
 ---
 
@@ -26,6 +43,15 @@ This options show the parsed result of your schema (can be useful sometimes)
 
 This options also allow log from the function (example, a mistake)
 
+<details>
+<summary>Test</summary>
+
+```sh
+npm -s run test test/debug.test.js
+```
+
+</details>
+
 ---
 
 ### Separator
@@ -35,6 +61,15 @@ This options also allow log from the function (example, a mistake)
 > - values: string
 
 `.csv` stands for "Comma Separated Values", but if you're a rebel, this options is made for you :)
+
+<details>
+<summary>Test</summary>
+
+```sh
+npm -s run test test/custom_separator.test.js
+```
+
+</details>
 
 ---
 
@@ -48,6 +83,15 @@ This function desactivate the parsing of values: `function`, `int`, `float`, `st
 
 With this function all is string
 
+<details>
+<summary>Test</summary>
+
+```sh
+npm -s run test test/stop_parse_value.test.js
+```
+
+</details>
+
 ---
 
 ### Line Call Back
@@ -56,7 +100,16 @@ With this function all is string
 > - default: `null`
 > - value: function (async or not)
 
-It activate the callBack after each line, can be useful if ou want to do a insert in database (for example)
+It activates the callBack after each line, can be useful if ou want to do a insert in database (for example)
+
+<details>
+<summary>Test</summary>
+
+```sh
+npm -s run test test/line_callBack.test.js
+```
+
+</details>
 
 ---
 
@@ -66,7 +119,17 @@ It activate the callBack after each line, can be useful if ou want to do a inser
 > - default: `false`
 > - value: boolean: `true` or `false`
 
-This options allow you to force taking the result of the call back even if it's `undefined` or `null`
+This options allow you to force taking the result of the callBackLine even if it's `undefined` or `null`
+
+<details>
+<summary>Test</summary>
+
+```sh
+npm -s run test test/callBack_force.test.js
+npm -s run test test/callBack_force_2.test.js
+```
+
+</details>
 
 ---
 
@@ -78,6 +141,15 @@ This options allow you to force taking the result of the call back even if it's 
 
 This options allow you to disable the parsing in an array.
 
+<details>
+<summary>Test</summary>
+
+```sh
+npm -s run test test/array_parse.test.js
+```
+
+</details>
+
 ---
 
 ### Override First Line
@@ -87,3 +159,12 @@ This options allow you to disable the parsing in an array.
 > - value: `array of string` or `false`
 
 This options allow you to override the first line.
+
+<details>
+<summary>Test</summary>
+
+```sh
+npm -s run test test/override_first_line.test.js
+```
+
+</details>
