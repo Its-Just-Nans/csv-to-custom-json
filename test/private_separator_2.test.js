@@ -21,7 +21,6 @@ const test = async (doLog) => {
     // with normal separator, "num1..." will be not displayed
     return parseFile(link, schema, {
         debug: true,
-        privateSeparator: "#" // we change the privateSeparator other thing (it can be any string)
     });
 };
 
@@ -29,7 +28,6 @@ const result = [
     {
         "num4": {
             "num1": "1",
-            "num1...": "string",
             "num2": "2",
             "num3": 3,
             "hello4": "The number 4 is 1,2,3,4"
@@ -38,7 +36,6 @@ const result = [
     {
         "num4": {
             "num1": "4",
-            "num1...": "string",
             "num2": "5",
             "num3": 6,
             "hello4": "The number 4 is 4,5,6,7"
@@ -47,7 +44,6 @@ const result = [
     {
         "num4": {
             "num1": "7",
-            "num1...": "string",
             "num2": "8",
             "num3": 9,
             "hello4": "The number 4 is 7,8,9,10"

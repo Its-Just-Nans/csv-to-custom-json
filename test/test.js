@@ -13,7 +13,7 @@ const test = async () => {
             doLog = false;
         }
         if (args.length > 0) {
-            console.log(args);
+            // console.log(args);
             listOfFiles = [];
             for (const oneArg of args) {
                 if (!oneArg.startsWith("-")) {
