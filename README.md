@@ -1,4 +1,4 @@
-# csv-to-custom-json &middot; [![npm version](https://img.shields.io/npm/v/csv-to-custom-json.svg)](https://www.npmjs.org/package/csv-to-custom-json) [![Build Status](https://travis-ci.com/Its-Just-Nans/csv-to-custom-json.svg?branch=main)](https://travis-ci.com/Its-Just-Nans/csv-to-custom-json)
+# csv-to-custom-json &middot; [![npm version](https://img.shields.io/npm/v/csv-to-custom-json.svg)](https://www.npmjs.org/package/csv-to-custom-json) [![dependencies](https://status.david-dm.org/gh/its-just-nans/csv-to-custom-json.svg)](https://david-dm.org/its-just-nans/csv-to-custom-json) [![Build Status](https://travis-ci.com/Its-Just-Nans/csv-to-custom-json.svg?branch=main)](https://travis-ci.com/Its-Just-Nans/csv-to-custom-json)
 
 Transform your `.csv` file to a custom JSON structure :) !
 
