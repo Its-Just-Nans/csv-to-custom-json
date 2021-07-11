@@ -11,6 +11,7 @@ Transform your `.csv` file to a custom JSON structure :) ! In browser and NodeJS
   - [Options](#options)
 - [Documentation](#documentation)
 - [Examples](#examples)
+- [Issues](#issues)
 - [About](#about)
 - [License](#license)
 
@@ -116,9 +117,17 @@ npm run test
 
 And see `*.test.js` files to know which code is used !
 
+## Issues
+
+Oh no 😟 !
+
+Go here [csv-to-custom-json/issues](https://github.com/Its-Just-Nans/csv-to-custom-json/issues)
+
 ## About
 
 I coded this instead of doing my homework 😳
+
+You can discuss here : [csv-to-custom-json/discussions](https://github.com/Its-Just-Nans/csv-to-custom-json/discussions)
 
 ## License
 
