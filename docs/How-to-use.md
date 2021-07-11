@@ -34,7 +34,6 @@ const doConversion = async () => {
 }
 
 doConversion();
-const result = await converter();
 ```
 
 > Legend :
