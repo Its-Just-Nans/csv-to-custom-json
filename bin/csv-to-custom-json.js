@@ -67,7 +67,7 @@ if (!options.silent) {
     }
 }
 let res;
-(async () => {
+const cliAction = async () => {
     if (fs.existsSync(options.entry)) {
         let schema;
         let optionsObject = {};
@@ -126,6 +126,8 @@ let res;
     } else {
         throw new Error("Error during parsing or can't parse");
     }
-})().catch((e) => {
+};
+
+cliAction().catch((e) => {
     console.log(e);
 })

@@ -31,7 +31,8 @@
         "node": ">=4.0.0"
     },
     "scripts": {
-        "test": "node test/test.js"
+        "test": "node test/test.js",
+        "build": "node createFile.js"
     },
     "browser": "./browser/browser.js",
     "main": "index.js"

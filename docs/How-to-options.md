@@ -185,3 +185,20 @@ npm -s run test test/private_separator.test.js test/private_separator_2.test.js
 ```
 
 </details>
+
+### Avoid void line
+
+> - name: `avoidVoidLine`
+> - default: `false`
+> - value: `boolean`
+
+This options allow you to not parse void line
+
+<details>
+<summary>Test</summary>
+
+```sh
+npm -s run test test/avoidVoidLine.test.js test/avoidVoidLine2.test.js test/avoidVoidLine3.test.js
+```
+
+</details>

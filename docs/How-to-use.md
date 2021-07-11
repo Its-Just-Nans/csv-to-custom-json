@@ -1,0 +1,84 @@
+# How to use csv-to-custom-json
+
+## In NodeJS
+
+Just import the function and use it !
+
+```js
+const converter = require("csv-to-custom-json")
+
+const result = await converter("myfile.csv");
+
+```
+
+## In browser
+
+We nned to import the front version :
+
+```js
+import converter from "csv-to-custom-json/front"
+const result = await converter([
+        "num1,num2,num3,num4",
+        "1,2,3,4",
+        "4,5,6,7",
+        "7,8,9,10"
+    ]);
+```
+
+> Legend :
+>
+> - the difference with the normal file :
+>   - no `fs`
+>   - no `readline`
+>   - we pass an array of line and not a link
+
+## How to use the schema
+
+Create a schema variable and put it as second parameter !
+
+Exemple with a simple `csv` :
+
+```csv
+num1,num2,num3
+1,2,3
+4,5,6
+7,8,9
+```
+
+```js
+const schema = {
+        num1: "string",
+        num2(item) {
+            return null;
+        },
+        num3: "int"
+    };
+const result = await converter("myfile.csv");
+```
+
+> Legend :
+>
+> - ad you can see the schema can contains function, or string with the type
+> - the values with type will be parsed
+> - attribute of the object are the word in the first line of the csv
+
+## More complexe schema
+
+It's the same as a simple schema :
+
+```js
+const schema = {
+        obj1: {
+            obj2: {
+                num4: "string"
+            }
+        },
+        num2: "",
+        num3: ""
+    };
+const result = await converter("myfile.csv");
+```
+
+If you want to check some real case, check out the folder `test` in the [GitHub repository](https://github.com/Its-Just-Nans/csv-to-custom-json)
+
+If you want to see and use options check that documentation : [How-to-options](https://github.com/Its-Just-Nans/csv-to-custom-json/wiki/How-to-options)

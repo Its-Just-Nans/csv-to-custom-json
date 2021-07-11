@@ -1,0 +1,6 @@
+.npmignore
+/test
+.travis.yml
+.vscode
+.github
+createFile.js

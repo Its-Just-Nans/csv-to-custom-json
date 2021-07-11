@@ -1,5 +1,6 @@
 const parseFile = require("../index");
 const path = require("path");
+const { rejects } = require("assert");
 
 const test = async (doLog) => {
     const linkFile = "./simple.csv";

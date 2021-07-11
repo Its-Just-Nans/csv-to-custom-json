@@ -1,7 +1,4 @@
-// front-not-used start-block
-const fs = require("fs");
-const readline = require("readline");
-// front-not-used end-block
+
 
 /* eslint require-await: "off"*/
 const parseFile = async function (pathToFile, schema, optionsUser) {
@@ -41,25 +38,11 @@ const parseFile = async function (pathToFile, schema, optionsUser) {
             console.log("Useless informations : just use try catch if you don't want error :)");
         }
     }
-    // front-not-used start-block
-    if (typeof pathToFile === "string") {
-        if (!fs.existsSync(pathToFile)) {
-            if (options.error === "no") {
-                return [];
-            }
-            throw new Error("Can't access to the file");
-        }
-    }
-    // front-not-used end-block
+
     return new Promise((resolve) => {
         let lineReader;
         if (typeof pathToFile == "string") {
-            // front-not-used start-block
-            lineReader = readline.createInterface({
-                crlfDelay: Infinity,
-                input: fs.createReadStream(pathToFile)
-            });
-            // front-not-used end-block
+
         } else if (Array.isArray(pathToFile)) {
             lineReader = pathToFile;
         }
@@ -258,4 +241,4 @@ const parseFile = async function (pathToFile, schema, optionsUser) {
     });
 };
 
-module.exports = parseFile;
+export default parseFile;
