@@ -7,7 +7,12 @@ Just import the function and use it !
 ```js
 const converter = require("csv-to-custom-json")
 
-const result = await converter("myfile.csv");
+
+const doConversion = async () => {
+    const result = await converter("myfile.csv");
+}
+
+doConversion();
 
 ```
 
@@ -17,12 +22,19 @@ We nned to import the front version :
 
 ```js
 import converter from "csv-to-custom-json/front"
-const result = await converter([
+
+const doConversion = async () => {
+    // we pass an array wich contains all lines
+    const result = await converter([
         "num1,num2,num3,num4",
         "1,2,3,4",
         "4,5,6,7",
         "7,8,9,10"
     ]);
+}
+
+doConversion();
+const result = await converter();
 ```
 
 > Legend :
@@ -47,12 +59,12 @@ num1,num2,num3
 
 ```js
 const schema = {
-        num1: "string",
-        num2(item) {
-            return null;
-        },
-        num3: "int"
-    };
+    num1: "string",
+    num2(item) {
+        return null;
+    },
+    num3: "int"
+};
 const result = await converter("myfile.csv");
 ```
 
@@ -68,14 +80,14 @@ It's the same as a simple schema :
 
 ```js
 const schema = {
-        obj1: {
-            obj2: {
-                num4: "string"
-            }
-        },
-        num2: "",
-        num3: ""
-    };
+    obj1: {
+        obj2: {
+            num4: "string"
+        }
+    },
+    num2: "",
+    num3: ""
+};
 const result = await converter("myfile.csv");
 ```
 
