@@ -64,7 +64,7 @@ const schema = {
     },
     num3: "int"
 };
-const result = await converter("myfile.csv");
+const result = await converter("myfile.csv", schema);
 ```
 
 > Caption :
@@ -87,7 +87,7 @@ const schema = {
     num2: "",
     num3: ""
 };
-const result = await converter("myfile.csv");
+const result = await converter("myfile.csv", schema);
 ```
 
 If you want to check some real case, check out the folder `test` in the [GitHub repository](https://github.com/Its-Just-Nans/csv-to-custom-json)
