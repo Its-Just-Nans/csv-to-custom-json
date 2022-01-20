@@ -14,7 +14,7 @@ const parsedFile = await parseFile("myfile.csv", schema, {
 
 ## Informations for tests
 
-- For options, when it's writed `boolean`, in reality, it can be any `true` value of javascript. Same for `false`.
+- For options, when it is written `boolean`, in reality, it can be any `true` value of javascript. Same for `false`.
 
 - command to run test
 
@@ -24,7 +24,7 @@ Test can be run with options :
 npm -s run test -- -n test/callBack_force.test.js callBack_force.test.js
 ```
 
-> Legend :
+> Caption :
 >
 > - `-s` is to silent npm
 > - `--` is used to pass the `-n` parameters to the `test.js` file
@@ -79,7 +79,7 @@ npm -s run test test/custom_separator.test.js
 > - default: `true`
 > - value: boolean: `true` or `false`
 
-This function desactivate the parsing of values: `function`, `int`, `float`, `string`
+This function deactivates the parsing of values: `function`, `int`, `float`, `string`
 
 With this function all is string
 

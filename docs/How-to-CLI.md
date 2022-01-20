@@ -16,7 +16,7 @@ Here is the `package.json`
 }
 ```
 
-> Legend :
+> Caption :
 >
 > - You can now run it with `npm run cli`
 > - You can change `YOUR_OPTIONS...` with corrects options
@@ -29,7 +29,7 @@ You can use the command
 csv-to-custom-json YOUR_OPTIONS...
 ```
 
-> Legend :
+> Caption :
 >
 > - You can change `YOUR_OPTIONS...` with corrects options
 

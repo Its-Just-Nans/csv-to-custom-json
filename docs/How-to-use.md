@@ -18,7 +18,7 @@ doConversion();
 
 ## In browser
 
-We nned to import the front version :
+We need to import the front version :
 
 ```js
 import converter from "csv-to-custom-json/front"
@@ -36,7 +36,7 @@ const doConversion = async () => {
 doConversion();
 ```
 
-> Legend :
+> Caption :
 >
 > - the difference with the normal file :
 >   - no `fs`
@@ -67,7 +67,7 @@ const schema = {
 const result = await converter("myfile.csv");
 ```
 
-> Legend :
+> Caption :
 >
 > - ad you can see the schema can contains function, or string with the type
 > - the values with type will be parsed

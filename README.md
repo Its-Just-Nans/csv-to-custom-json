@@ -1,4 +1,6 @@
-# csv-to-custom-json &middot; [![npm version](https://img.shields.io/npm/v/csv-to-custom-json.svg)](https://www.npmjs.org/package/csv-to-custom-json) [![dependencies](https://status.david-dm.org/gh/its-just-nans/csv-to-custom-json.svg)](https://david-dm.org/its-just-nans/csv-to-custom-json) [![Build Status](https://travis-ci.com/Its-Just-Nans/csv-to-custom-json.svg?branch=main)](https://travis-ci.com/Its-Just-Nans/csv-to-custom-json)
+# csv-to-custom-json &middot; [![npm version](https://img.shields.io/npm/v/csv-to-custom-json.svg)](https://www.npmjs.org/package/csv-to-custom-json)
+
+Looking for Python version ? Check here : [https://github.com/Its-Just-Nans/csv-to-custom-json-python](https://github.com/Its-Just-Nans/csv-to-custom-json-python)
 
 Transform your `.csv` file to a custom JSON structure :) ! In browser and NodeJS !
 
@@ -54,7 +56,7 @@ const parsedFile = await parseFile("myfile.csv", schema);
 > - You can see that the value of attribute define how variable will be parse
 > - You can see that we can use callBack, the value returned by the callBack will be put in the result (if not `undefined` or `null`)
 
-This program allow you to create complex strucured JSON, like this :
+This program allow you to create complex structured JSON, like this :
 
 ```javascript
 const schema = {
@@ -81,7 +83,7 @@ const parsedFile = await parseFile("myfile.csv", schema);
 
 ### Options
 
-To use options, you need to add a third paramters which is an object with options.
+To use options, you need to add a third parameters which is an object with options.
 
 Example :
 

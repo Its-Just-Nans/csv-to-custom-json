@@ -8,7 +8,7 @@ Then install my node_module with
 npm install csv-to-custom-json
 ```
 
-> Lengend :
+> Caption :
 >
 > - `npm` stands for `Node Packet Manager`, it can be used to download `node_modules`
 > - `csv-to-custom-json` is the name of the `node_modules`
@@ -22,7 +22,7 @@ const result = await converter("myfile.csv");
 
 ```
 
-> Lengend :
+> Caption :
 >
 > - the name `myfile.csv` can be different, just change it with the correct name of your file
 

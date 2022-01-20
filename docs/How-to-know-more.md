@@ -14,13 +14,13 @@ const schema = {
         },
         () => "arrow"
     ]
-}
+};
 ```
 
-> Legend:
+> Caption:
 >
 > - by default, `num4` in the firstLine will be parsed and replace by the corresponding value.
-> - functions are in an array and can't be identified by a name, so we can't give to it a value paramter, so the function will receive an array with all value of the current line
+> - functions are in an array and can't be identified by a name, so we can't give to it a value parameter, so the function will receive an array with all value of the current line
 
 ## Array schema Trick
 
