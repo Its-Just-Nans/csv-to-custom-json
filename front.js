@@ -120,10 +120,12 @@ const parseFile = async function (pathToFile, schema, optionsUser) {
                     if (index === -1) {
                         currentValue = schemaValue;
                     } else {
-                        currentValue = allValues[index] || "";
+                        if(index < allValues.length) {
+                            currentValue = allValues[index];
+                        }
                     }
                     // Optionnal parse the value
-                    if (options.parse === true) {
+                    if (options.parse === true && currentValue != null && currentValue != '') {
                         if (typeof schemaValue !== "undefined") {
                             if (schemaValue === "int") {
                                 currentValue = parseInt(currentValue, 10);

@@ -74,7 +74,7 @@ const result = [
         }
     ],
     [
-        "",
+        null,
         "text",
         [
             "arrayHereLol",
@@ -90,7 +90,7 @@ const result = [
         "arrow",
         {
             "staticValue": "value",
-            "num1": null
+            "num1": ""
         }
     ],
     [
