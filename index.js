@@ -137,7 +137,7 @@ const parseFile = async function (pathToFile, schema, optionsUser) {
                     if (index === -1) {
                         currentValue = schemaValue;
                     } else {
-                        if(index < allValues.length) {
+                        if (index < allValues.length) {
                             currentValue = allValues[index];
                         }
                     }
@@ -211,7 +211,7 @@ const parseFile = async function (pathToFile, schema, optionsUser) {
                 parsedLine = await parseLine(oneLine);
                 if (typeof options.lineCallBack !== "undefined" && typeof options.lineCallBack === "function") {
                     const resCallback = await options.lineCallBack(parsedLine, oneLine);
-                    if (typeof resCallBack === "undefined" && resCallback === null) {
+                    if ((typeof resCallBack === "undefined" && resCallback === null) || resCallback === undefined) {
                         if (options.callBackForce) {
                             parsedLine = resCallback;
                         } else {
@@ -219,6 +219,8 @@ const parseFile = async function (pathToFile, schema, optionsUser) {
                                 console.error("CallBack force at false and callBack result is not correct");
                             }
                         }
+                    } else {
+                        parsedLine = resCallback;
                     }
                 }
                 finalJson.push(parsedLine);

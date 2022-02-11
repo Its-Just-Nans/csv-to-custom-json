@@ -15,26 +15,30 @@ const test = async (doLog) => {
     return parseFile(link, schema, {
         lineCallBack: async (parsedLine, sourceLine) => {
             console.log(JSON.stringify(parsedLine), sourceLine, "lineCallBack");
-            // return nothing
+            return {
+                [Object.keys(parsedLine)[0]]: parsedLine[Object.keys(parsedLine)[0]] + 1,
+                [Object.keys(parsedLine)[1]]: parsedLine[Object.keys(parsedLine)[1]] + 1,
+                [Object.keys(parsedLine)[2]]: parsedLine[Object.keys(parsedLine)[2]] + 1
+            };
         }
     });
 };
 
 const result = [
     {
-        "num1": "1",
-        "num2": "2",
-        "num3": "3"
+        "num1": "11",
+        "num2": "21",
+        "num3": "31"
     },
     {
-        "num1": "4",
-        "num2": "5",
-        "num3": "6"
+        "num1": "41",
+        "num2": "51",
+        "num3": "61"
     },
     {
-        "num1": "7",
-        "num2": "8",
-        "num3": "9"
+        "num1": "71",
+        "num2": "81",
+        "num3": "91"
     }
 ];
 

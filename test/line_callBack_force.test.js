@@ -15,27 +15,16 @@ const test = async (doLog) => {
     return parseFile(link, schema, {
         lineCallBack: async (parsedLine, sourceLine) => {
             console.log(JSON.stringify(parsedLine), sourceLine, "lineCallBack");
-            // return nothing
-        }
+            return null; // return null but force
+        },
+        callBackForce: true
     });
 };
 
 const result = [
-    {
-        "num1": "1",
-        "num2": "2",
-        "num3": "3"
-    },
-    {
-        "num1": "4",
-        "num2": "5",
-        "num3": "6"
-    },
-    {
-        "num1": "7",
-        "num2": "8",
-        "num3": "9"
-    }
+    null,
+    null,
+    null
 ];
 
 module.exports = {

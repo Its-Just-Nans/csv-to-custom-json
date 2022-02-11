@@ -107,6 +107,8 @@ It activates the callBack after each line, can be useful if ou want to do a inse
 
 ```sh
 npm -s run test test/line_callBack.test.js
+npm -s run test test/line_callBack_value.test.js
+npm -s run test test/line_callBack_force.test.js
 ```
 
 </details>
