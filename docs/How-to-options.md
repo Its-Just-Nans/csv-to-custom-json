@@ -171,23 +171,6 @@ npm -s run test test/override_first_line.test.js
 
 </details>
 
-### Private separator
-
-> - name: `privateSeparator`
-> - default: `...`
-> - value: `string`
-
-This options allow you to change the internal separator of the script. It can be useful if values contain `.` in their names
-
-<details>
-<summary>Test</summary>
-
-```sh
-npm -s run test test/private_separator.test.js test/private_separator_2.test.js
-```
-
-</details>
-
 ### Avoid void line
 
 > - name: `avoidVoidLine`

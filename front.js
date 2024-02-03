@@ -23,7 +23,6 @@ const parseFile = async function (pathToFile, schema, optionsUser) {
         lineCallBack: checkOptions(optionsUser.lineCallBack, null),
         parse: checkOptions(optionsUser.parse, true),
         separator: checkOptions(optionsUser.separator, ","),
-        privateSeparator: checkOptions(optionsUser.privateSeparator, "..."),
         overrideFirstLine: checkOptions(optionsUser.overrideFirstLine, false),
         avoidVoidLine: checkOptions(optionsUser.avoidVoidLine, false),
     };
@@ -52,43 +51,44 @@ const parseFile = async function (pathToFile, schema, optionsUser) {
         const finalJson = [];
         let lineBuffer = [];
 
-        const createFieldsBinding = function (schemaObject, startPath = "") {
+        const createFieldsBinding = function (schemaObject, startPath = []) {
             let bindings = [];
             for (const oneElement in schemaObject) {
                 if (Object.prototype.hasOwnProperty.call(schemaObject, oneElement)) {
-                    const path = startPath === "" ? `${oneElement}` : `${startPath}${options.privateSeparator}${oneElement}`;
+                    const path = startPath.length === 0 ? [oneElement] : [...startPath, oneElement];
                     if (typeof schemaObject[oneElement] === "object" || Array.isArray(schemaObject[oneElement])) {
                         if (Array.isArray(schemaObject[oneElement])) {
                             bindings.push({
                                 name: oneElement,
                                 path: path,
-                                type: "helper-array"
+                                type: "helper-array",
                             });
                         }
-                        bindings = [
-                            ...bindings,
-                            ...createFieldsBinding(schemaObject[oneElement], path)
-                        ];
+                        bindings = [...bindings, ...createFieldsBinding(schemaObject[oneElement], path)];
                     } else {
-                        if (Array.isArray(schemaObject) && options.arrayParse && firstLine.includes(schemaObject[oneElement])) {
+                        if (
+                            Array.isArray(schemaObject) &&
+                            options.arrayParse &&
+                            firstLine.includes(schemaObject[oneElement])
+                        ) {
                             bindings.push({
                                 name: schemaObject[oneElement],
                                 path: path,
-                                value: "string"
+                                value: "string",
                             });
                         } else {
                             if (firstLine.includes(oneElement) || typeof schemaObject[oneElement] === "function") {
                                 bindings.push({
                                     name: oneElement,
                                     path: path,
-                                    value: schemaObject[oneElement]
+                                    value: schemaObject[oneElement],
                                 });
                             } else {
                                 bindings.push({
                                     name: oneElement,
                                     path: path,
                                     type: "static",
-                                    value: schemaObject[oneElement]
+                                    value: schemaObject[oneElement],
                                 });
                             }
                         }
@@ -112,7 +112,7 @@ const parseFile = async function (pathToFile, schema, optionsUser) {
             for (const oneRow of rows) {
                 const onePathRow = oneRow.path;
                 const onePathName = oneRow.name;
-                const allPath = onePathRow.split(options.privateSeparator);
+                const allPath = onePathRow;
                 let currentValue = null;
                 if (typeof oneRow.type === "undefined" || oneRow.type === null) {
                     const schemaValue = oneRow.value;
@@ -120,12 +120,12 @@ const parseFile = async function (pathToFile, schema, optionsUser) {
                     if (index === -1) {
                         currentValue = schemaValue;
                     } else {
-                        if(index < allValues.length) {
+                        if (index < allValues.length) {
                             currentValue = allValues[index];
                         }
                     }
                     // Optionnal parse the value
-                    if (options.parse === true && currentValue != null && currentValue != '') {
+                    if (options.parse === true && currentValue != null && currentValue != "") {
                         if (typeof schemaValue !== "undefined") {
                             if (schemaValue === "int") {
                                 currentValue = parseInt(currentValue, 10);
@@ -178,7 +178,7 @@ const parseFile = async function (pathToFile, schema, optionsUser) {
                         goodPlace = currentValue;
                     }
                 } else {
-                    obj[onePathRow] = currentValue;
+                    obj[onePathRow[0]] = currentValue;
                 }
             }
             return obj;
@@ -194,7 +194,7 @@ const parseFile = async function (pathToFile, schema, optionsUser) {
                 parsedLine = await parseLine(oneLine);
                 if (typeof options.lineCallBack !== "undefined" && typeof options.lineCallBack === "function") {
                     const resCallback = await options.lineCallBack(parsedLine, oneLine);
-                    if (typeof resCallBack === "undefined" && resCallback === null) {
+                    if ((typeof resCallBack === "undefined" && resCallback === null) || resCallback === undefined) {
                         if (options.callBackForce) {
                             parsedLine = resCallback;
                         } else {
@@ -202,6 +202,8 @@ const parseFile = async function (pathToFile, schema, optionsUser) {
                                 console.error("CallBack force at false and callBack result is not correct");
                             }
                         }
+                    } else {
+                        parsedLine = resCallback;
                     }
                 }
                 finalJson.push(parsedLine);
@@ -209,7 +211,11 @@ const parseFile = async function (pathToFile, schema, optionsUser) {
             lineBuffer = []; // Clear the buffer
         };
         const parsefirstLine = async (line) => {
-            if (typeof options.overrideFirstLine !== "undefined" && options.overrideFirstLine !== null && Array.isArray(options.overrideFirstLine)) {
+            if (
+                typeof options.overrideFirstLine !== "undefined" &&
+                options.overrideFirstLine !== null &&
+                Array.isArray(options.overrideFirstLine)
+            ) {
                 firstLine = options.overrideFirstLine; // check if same length ?
             } else {
                 firstLine = line.split(options.separator);
@@ -223,7 +229,7 @@ const parseFile = async function (pathToFile, schema, optionsUser) {
                 // There is no schema
                 rows = firstLine.map((element) => ({
                     name: element,
-                    path: element
+                    path: [element],
                 }));
             }
         };
@@ -238,7 +244,7 @@ const parseFile = async function (pathToFile, schema, optionsUser) {
                 }
             }
             resolve(finalJson);
-        }
+        };
         reader();
     });
 };

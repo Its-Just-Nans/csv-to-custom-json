@@ -7,15 +7,16 @@ Transform your `.csv` file to a custom JSON structure :) ! In browser and NodeJS
 <details>
 <summary>Click to expand</summary>
 
-- [Simple documentation](#simple-documentation)
-  - [Simple case](#simple-case)
-  - [Structure JSON](#structure-json)
-  - [Options](#options)
-- [Documentation](#documentation)
-- [Examples](#examples)
-- [Issues](#issues)
-- [About](#about)
-- [License](#license)
+- [csv-to-custom-json · ](#csv-to-custom-json--)
+  - [Simple documentation](#simple-documentation)
+    - [Simple case](#simple-case)
+    - [Structure JSON](#structure-json)
+    - [Options](#options)
+  - [Documentation](#documentation)
+  - [Examples](#examples)
+  - [Issues](#issues)
+  - [About](#about)
+  - [License](#license)
 
 </details>
 
@@ -97,17 +98,7 @@ All options are listed in the documentation (you can run [examples](#examples) t
 
 ## Documentation
 
-A whole documentation is available on GitHub : [https://github.com/Its-Just-Nans/csv-to-custom-json/wiki](https://github.com/Its-Just-Nans/csv-to-custom-json/wiki)
-
-And if you really really like it, you can even clone it with :
-
-```sh
-git clone https://github.com/Its-Just-Nans/csv-to-custom-json.wiki.git
-```
-
-> Legend :
->
-> - Just "wow"
+A whole documentation is available on [./docs](./docs)
 
 ## Examples
 

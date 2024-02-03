@@ -1,6 +1,6 @@
 # How to use csv-to-custom-json
 
-## In NodeJS
+## With requirejs
 
 Just import the function and use it !
 
@@ -16,7 +16,7 @@ doConversion();
 
 ```
 
-## In browser
+## With ESM import
 
 We need to import the front version :
 
@@ -92,4 +92,4 @@ const result = await converter("myfile.csv", schema);
 
 If you want to check some real case, check out the folder `test` in the [GitHub repository](https://github.com/Its-Just-Nans/csv-to-custom-json)
 
-If you want to see and use options check that documentation : [How-to-options](https://github.com/Its-Just-Nans/csv-to-custom-json/wiki/How-to-options)
+If you want to see and use options check that documentation : [How-to-options](./How-to-options.md)
