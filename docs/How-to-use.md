@@ -93,3 +93,42 @@ const result = await converter("myfile.csv", schema);
 If you want to check some real case, check out the folder `test` in the [GitHub repository](https://github.com/Its-Just-Nans/csv-to-custom-json)
 
 If you want to see and use options check that documentation : [How-to-options](./How-to-options.md)
+
+## Tricks
+
+### Array Trick
+
+If you have an simple array (not with object), the function can even parse your fields
+
+```javascript
+const schema = {
+    num1: [
+        "num4",
+        "text",
+        function (allValues) {
+            return `toto${allValues.toString()}`;
+        },
+        () => "arrow"
+    ]
+};
+```
+
+> Caption:
+>
+> - by default, `num4` in the firstLine will be parsed and replace by the corresponding value.
+> - functions are in an array and can't be identified by a name, so we can't give to it a value parameter, so the function will receive an array with all value of the current line
+
+### Array schema Trick
+
+Fun-fact : schema can even be an array !
+
+```javascript
+const schema = [
+    "num4",
+    "text",
+    function (allValues) {
+        return `toto${allValues.toString()}`;
+    },
+    () => "arrow"
+];
+```
