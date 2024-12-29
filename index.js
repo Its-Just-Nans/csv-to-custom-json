@@ -37,7 +37,7 @@ const parseFile = async function (pathToFile, schema, optionsUser) {
         }
         console.log("OPTIONS", JSON.stringify(options));
         if (options.error === "no") {
-            console.log("Useless informations : just use try catch if you don't want error :)");
+            console.log("Useless information : just use try catch if you don't want error :)");
         }
     }
     // front-not-used start-block
@@ -141,7 +141,7 @@ const parseFile = async function (pathToFile, schema, optionsUser) {
                             currentValue = allValues[index];
                         }
                     }
-                    // Optionnal parse the value
+                    // Optional parse the value
                     if (options.parse === true && currentValue != null && currentValue != "") {
                         if (typeof schemaValue !== "undefined") {
                             if (schemaValue === "int") {

@@ -2,7 +2,7 @@
 
 ## Options
 
-To use options, you need to add a third paramters which is an object with options.
+To use options, you need to add a third parameters which is an object with options.
 
 Example :
 
@@ -12,7 +12,7 @@ const parsedFile = await parseFile("myfile.csv", schema, {
 });
 ```
 
-## Informations for tests
+## Information for tests
 
 - For options, when it is written `boolean`, in reality, it can be any `true` value of javascript. Same for `false`.
 

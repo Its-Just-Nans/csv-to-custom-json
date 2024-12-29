@@ -24,7 +24,7 @@ We need to import the front version :
 import converter from "csv-to-custom-json/front"
 
 const doConversion = async () => {
-    // we pass an array wich contains all lines
+    // we pass an array which contains all lines
     const result = await converter([
         "num1,num2,num3,num4",
         "1,2,3,4",
@@ -47,7 +47,7 @@ doConversion();
 
 Create a schema variable and put it as second parameter !
 
-Exemple with a simple `csv` :
+Example with a simple `csv` :
 
 ```csv
 num1,num2,num3

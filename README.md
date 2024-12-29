@@ -33,7 +33,7 @@ const parsed = await parseFile(linkFile);
 
 ### Structure JSON
 
-First you need to create the schema of your futur JSON
+First you need to create the schema of your future JSON
 
 ```javascript
 const schema = {

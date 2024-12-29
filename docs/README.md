@@ -37,7 +37,7 @@ Now you are ready to check Options !
 
 ```sh
 npm install -g csv-to-custom-json
-# or direcly execute it with npx
+# or directly execute it with npx
 npx csv-to-custom-json
 ```
 
