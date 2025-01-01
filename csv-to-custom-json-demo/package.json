@@ -22,6 +22,6 @@
         "svelte": "^3.0.0"
     },
     "dependencies": {
-        "csv-to-custom-json": "latest"
+        "csv-to-custom-json": "../csv-to-custom-json/"
     }
 }
